@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  database:
+    restart: always
+    container_name: database
+    image: postgres:11
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: menu_database
+      PGDATA: /data/postgres
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+    networks:
+      - menu_network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api
+    command: uvicorn main:app --host 0.0.0.0 --port 8080
+    env_file:
+      - .env
+    depends_on:
+      - database
+    ports:
+      - "8080:8080"
+    networks:
+      - menu_network
+    logging:
+      options:
+        max-size: 100m
+
+
+networks:
+  menu_network:
+    driver: bridge
