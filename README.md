@@ -9,20 +9,19 @@ docker-compose up --build -d
 docker-compose up
 
 3) Создать миграции
-docker exec -it useful-back aerich init-db
+docker exec -it api aerich init-db
 
 4) Создать суперюзера
-docker exec -it useful-back python scripts/createsuperuser.py
+docker exec -it api python scripts/createsuperuser.py
 
 5) Если не выполняет команды
-Войти в контейнер - docker exec -it useful-back bash
-Выполнить команды без docker exec -it useful-back
+Войти в контейнер - docker exec -it api bash
+Выполнить команды без docker exec -it api
 
 6) Если нужно очистить БД
 docker-compose down -v
 
 7) Создать миграции
-docker exec -it useful-back aerich migrate
-
+docker exec -it api aerich init-db
 8) Выполнить миграции
-docker exec -it useful-back aerich upgrade
+docker exec -it api aerich init-db
